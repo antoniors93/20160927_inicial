@@ -6,6 +6,9 @@
 package es.albarregas.servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,24 +21,39 @@ import javax.servlet.http.HttpServletResponse;
  * @author antonio
  */
 @WebServlet(name = "CicloVida", urlPatterns = {"/ciclo"})
-public class CicloVida extends HttpServlet {
-
-    
+public class CicloVida extends HttpServlet {    
 
     @Override
     public void init(ServletConfig config){
-        System.out.println("Init()");
+        
     }
     
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void service(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("Service()");
+        PrintWriter out = response.getWriter();
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet SaludoAnotacion</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<a href='index.html'>Index</a>");
+            out.println("<h1>Par&aacute;metros iniciales</h1>");
+            Enumeration<String> parametros=request.getParameterNames();
+            while(parametros.hasMoreElements()){
+                String elemento=parametros.nextElement();
+                String valor=request.getParameter(elemento);
+                out.println(elemento+" - "+valor);
+            }
+            out.println("</body>");
+            out.println("</html>");
     }
     
     @Override
     public void destroy(){
         System.out.println("destroy()");
     }
+    
 
 }
