@@ -25,7 +25,7 @@ public class CicloVida extends HttpServlet {
 
     @Override
     public void init(ServletConfig config){
-        
+        System.out.println("init()");
     }
     
     @Override
@@ -40,12 +40,21 @@ public class CicloVida extends HttpServlet {
             out.println("<body>");
             out.println("<a href='index.html'>Index</a>");
             out.println("<h1>Par&aacute;metros iniciales</h1>");
+
             Enumeration<String> parametros=request.getParameterNames();
             while(parametros.hasMoreElements()){
                 String elemento=parametros.nextElement();
                 String valor=request.getParameter(elemento);
                 out.println(elemento+" - "+valor);
             }
+            
+            Enumeration<String> parametros2=request.getHeaderNames();
+              while(parametros2.hasMoreElements()){
+                String elemento=parametros.nextElement();
+                String valor=request.getHeader(elemento);
+                out.println(elemento+" - "+valor);
+            }
+              
             out.println("</body>");
             out.println("</html>");
     }
