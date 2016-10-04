@@ -7,7 +7,9 @@ package es.albarregas.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Enumeration;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +18,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author antonio
  */
-public class Saludo extends HttpServlet {
+@WebServlet(name = "Formulario1", urlPatterns = {"/Formulario1"})
+public class Formulario1 extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,10 +38,22 @@ public class Saludo extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Saludo</title>");            
+            out.println("<title>Servlet Formulario1</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Saludo at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Resultados del formulario</h1>");
+            
+            Enumeration<String> parametros=request.getParameterNames();
+            while(parametros.hasMoreElements()){
+                String elemento=parametros.nextElement();
+                String valor=request.getParameter(elemento);
+                if(elemento.equalsIgnoreCase("enviar")){
+                out.println(elemento+": "+valor);
+                }
+            }
+            if(request.getParameter("marca")==null){
+                out.println("Marca: OF");
+            }
             out.println("</br> <a href='index.html' > Enlace a index </a>");
             out.println("</body>");
             out.println("</html>");
@@ -57,7 +72,19 @@ public class Saludo extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+         try (PrintWriter out = response.getWriter()) {
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet Formulario1</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Resultados del formulario</h1>");
+            out.println("No se ha pasado por el formulario");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     /**

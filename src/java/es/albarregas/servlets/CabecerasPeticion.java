@@ -7,7 +7,7 @@ package es.albarregas.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.ServletConfig;
+import java.util.Enumeration;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,18 +18,11 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author antonio
  */
-@WebServlet(name = "CicloVida", urlPatterns = {"/CicloVida"})
-public class CicloVida extends HttpServlet {    
-    
+@WebServlet(name = "CabeceraPeticion", urlPatterns = {"/CabecerasPeticion"})
+public class CabecerasPeticion extends HttpServlet {    
 
-
-   @Override
-    public void init(ServletConfig config){
-        System.out.println("init()");
-    }
     
-    @Override
-    protected void service(HttpServletRequest request, HttpServletResponse response)
+    protected void ciclo(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             PrintWriter out = response.getWriter();
             out.println("<!DOCTYPE html>");
@@ -39,16 +32,24 @@ public class CicloVida extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Par&aacute;metros iniciales</h1>");
+
+            Enumeration<String> parametros=request.getParameterNames();
+            while(parametros.hasMoreElements()){
+                String elemento=parametros.nextElement();
+                String valor=request.getParameter(elemento);
+                out.println(elemento+" - "+valor);
+            }
+            
+            Enumeration<String> parametros2=request.getHeaderNames();
+              while(parametros2.hasMoreElements()){
+                String elemento=parametros.nextElement();
+                String valor=request.getHeader(elemento);
+                out.println(elemento+" - "+valor);
+            }
+              
             out.println("</br> <a href='index.html' > Enlace a index </a>");
             out.println("</body>");
             out.println("</html>");
-            System.out.println("service()");
     }
     
-    @Override
-    public void destroy(){
-        System.out.println("destroy()");
-    }
-    
-
 }
