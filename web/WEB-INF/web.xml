@@ -13,7 +13,7 @@
     </servlet>
     
     <servlet-mapping>
-        <servlet-name>Hola</servlet-name>
+        <servlet-name>Saludo</servlet-name>
         <url-pattern>/Saludo</url-pattern>
     </servlet-mapping>
 </web-app>
